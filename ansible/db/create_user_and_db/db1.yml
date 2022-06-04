@@ -1,0 +1,19 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+
+  tasks:
+          - name: Create db user with all privileges and with grant option.
+            community.mysql.mysql_user:
+                    login_user: root
+                    name: steve
+                    password: 12345
+                    priv: '*.*:ALL,GRANT'
+                    state: present
+
+          - name: Create a db with the above user credentials.
+            community.mysql.mysql_db:
+                    login_user: steve
+                    login_password: 12345
+                    name: steve_db
+                    state: present
