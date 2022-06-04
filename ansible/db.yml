@@ -1,0 +1,17 @@
+---
+
+- hosts: 127.0.0.1
+  connection: local
+
+  tasks:
+          - name: Create db user with all privileges and WITH GRANT option.
+            register: command_output
+            community.mysql.mysql_user:
+                    login_user: root
+                    name: bob
+                    password: 12345
+                    priv: '*.*:ALL,GRANT'
+                    state: present
+
+          - debug:
+                  var: command_output.stdout_lines
